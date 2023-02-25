@@ -5,3 +5,6 @@
 /.idea
 pnpm-lock.yaml
 **/*.log
+
+#ENV
+.env
