@@ -2,11 +2,9 @@ import { BlockHandlerContext, LogHandlerContext } from "@subsquid/evm-processor"
 import { Store } from "@subsquid/typeorm-store"
 import { In } from "typeorm"
 import * as erc721 from "../../abi/ERC721"
-import * as ens from "../../abi/ens"
 import { Owner, Token, Transfer } from "../../model"
 import { Ctx, TransferData } from '../../types/index'
 import { getOrCreateContractEntity } from "./contract"
-import { Interface } from "ethers/lib/utils"
 
 export const handle = async (ctx:Ctx) => {
     let transfersData: TransferData[] = []
@@ -14,9 +12,9 @@ export const handle = async (ctx:Ctx) => {
     for (let block of ctx.blocks) {
         for (let item of block.items) {
             if (item.kind !== 'evmLog') continue
-
             // if (item.evmLog.topics[0] === ens.events.Transfer.topic && item.address === contractAddress) {
               if (item.evmLog.topics[0] === erc721.events.Transfer.topic && item.evmLog.topics.length === 4 ) {
+              //  console.log(item,'item logged')
                 transfersData.push(handleTransfer({
                     ...ctx,
                     block:block.header,

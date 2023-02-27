@@ -1,23 +1,5 @@
 export const ABI_JSON = [
     {
-        "type": "constructor",
-        "payable": false,
-        "inputs": [
-            {
-                "type": "string",
-                "name": "name"
-            },
-            {
-                "type": "string",
-                "name": "symbol"
-            },
-            {
-                "type": "string",
-                "name": "baseURI"
-            }
-        ]
-    },
-    {
         "type": "event",
         "anonymous": false,
         "name": "Approval",
@@ -114,20 +96,8 @@ export const ABI_JSON = [
         ],
         "outputs": [
             {
-                "type": "uint256"
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "baseURI",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-            {
-                "type": "string"
+                "type": "uint256",
+                "name": "balance"
             }
         ]
     },
@@ -145,7 +115,8 @@ export const ABI_JSON = [
         ],
         "outputs": [
             {
-                "type": "address"
+                "type": "address",
+                "name": "operator"
             }
         ]
     },
@@ -198,7 +169,8 @@ export const ABI_JSON = [
         ],
         "outputs": [
             {
-                "type": "address"
+                "type": "address",
+                "name": "owner"
             }
         ]
     },
@@ -243,7 +215,7 @@ export const ABI_JSON = [
             },
             {
                 "type": "bytes",
-                "name": "_data"
+                "name": "data"
             }
         ],
         "outputs": []
@@ -260,7 +232,7 @@ export const ABI_JSON = [
             },
             {
                 "type": "bool",
-                "name": "approved"
+                "name": "_approved"
             }
         ],
         "outputs": []
@@ -332,7 +304,8 @@ export const ABI_JSON = [
         ],
         "outputs": [
             {
-                "type": "uint256"
+                "type": "uint256",
+                "name": "tokenId"
             }
         ]
     },

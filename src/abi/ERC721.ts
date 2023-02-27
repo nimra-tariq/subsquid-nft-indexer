@@ -23,9 +23,6 @@ export const functions = {
     balanceOf: new Func<[owner: string], {owner: string}, ethers.BigNumber>(
         abi, '0x70a08231'
     ),
-    baseURI: new Func<[], {}, string>(
-        abi, '0x6c0360eb'
-    ),
     getApproved: new Func<[tokenId: ethers.BigNumber], {tokenId: ethers.BigNumber}, string>(
         abi, '0x081812fc'
     ),
@@ -41,10 +38,10 @@ export const functions = {
     'safeTransferFrom(address,address,uint256)': new Func<[from: string, to: string, tokenId: ethers.BigNumber], {from: string, to: string, tokenId: ethers.BigNumber}, []>(
         abi, '0x42842e0e'
     ),
-    'safeTransferFrom(address,address,uint256,bytes)': new Func<[from: string, to: string, tokenId: ethers.BigNumber, _data: string], {from: string, to: string, tokenId: ethers.BigNumber, _data: string}, []>(
+    'safeTransferFrom(address,address,uint256,bytes)': new Func<[from: string, to: string, tokenId: ethers.BigNumber, data: string], {from: string, to: string, tokenId: ethers.BigNumber, data: string}, []>(
         abi, '0xb88d4fde'
     ),
-    setApprovalForAll: new Func<[operator: string, approved: boolean], {operator: string, approved: boolean}, []>(
+    setApprovalForAll: new Func<[operator: string, _approved: boolean], {operator: string, _approved: boolean}, []>(
         abi, '0xa22cb465'
     ),
     supportsInterface: new Func<[interfaceId: string], {interfaceId: string}, boolean>(
@@ -74,10 +71,6 @@ export class Contract extends ContractBase {
 
     balanceOf(owner: string): Promise<ethers.BigNumber> {
         return this.eth_call(functions.balanceOf, [owner])
-    }
-
-    baseURI(): Promise<string> {
-        return this.eth_call(functions.baseURI, [])
     }
 
     getApproved(tokenId: ethers.BigNumber): Promise<string> {
