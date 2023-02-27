@@ -1,12 +1,13 @@
-module.exports = class Data1677491848580 {
-    name = 'Data1677491848580'
+module.exports = class Data1677510518168 {
+    name = 'Data1677510518168'
 
     async up(db) {
         await db.query(`CREATE TABLE "owner" ("id" character varying NOT NULL, "balance" numeric NOT NULL, CONSTRAINT "PK_8e86b6b9f94aece7d12d465dc0c" PRIMARY KEY ("id"))`)
         await db.query(`CREATE INDEX "IDX_470d27686a5d2de68c007f973d" ON "owner" ("balance") `)
-        await db.query(`CREATE TABLE "contract" ("id" character varying NOT NULL, "name" text NOT NULL, "symbol" text NOT NULL, "contract_uri" text, "address" text, "contract_uri_updated" numeric, "total_supply" numeric NOT NULL, CONSTRAINT "PK_17c3a89f58a2997276084e706e8" PRIMARY KEY ("id"))`)
+        await db.query(`CREATE TABLE "contract" ("id" character varying NOT NULL, "name" text NOT NULL, "symbol" text NOT NULL, "contract_uri" text, "collection_type" character varying(7) NOT NULL, "address" text, "contract_uri_updated" numeric, "total_supply" numeric NOT NULL, CONSTRAINT "PK_17c3a89f58a2997276084e706e8" PRIMARY KEY ("id"))`)
         await db.query(`CREATE INDEX "IDX_973644690f8ec06af4eebfd3a8" ON "contract" ("name") `)
         await db.query(`CREATE INDEX "IDX_ae5c59dd42750a76aba50d9504" ON "contract" ("symbol") `)
+        await db.query(`CREATE INDEX "IDX_af7c8193cd50e74f8cf55ac0e1" ON "contract" ("collection_type") `)
         await db.query(`CREATE INDEX "IDX_04af51488ba2943b3f9ace5be9" ON "contract" ("contract_uri_updated") `)
         await db.query(`CREATE TABLE "transfer" ("id" character varying NOT NULL, "timestamp" TIMESTAMP WITH TIME ZONE NOT NULL, "block" integer NOT NULL, "transaction_hash" text NOT NULL, "token_id" character varying, "from_id" character varying, "to_id" character varying, CONSTRAINT "PK_fd9ddbdd49a17afcbe014401295" PRIMARY KEY ("id"))`)
         await db.query(`CREATE INDEX "IDX_b27b1150b8a7af68424540613c" ON "transfer" ("token_id") `)
@@ -31,6 +32,7 @@ module.exports = class Data1677491848580 {
         await db.query(`DROP TABLE "contract"`)
         await db.query(`DROP INDEX "public"."IDX_973644690f8ec06af4eebfd3a8"`)
         await db.query(`DROP INDEX "public"."IDX_ae5c59dd42750a76aba50d9504"`)
+        await db.query(`DROP INDEX "public"."IDX_af7c8193cd50e74f8cf55ac0e1"`)
         await db.query(`DROP INDEX "public"."IDX_04af51488ba2943b3f9ace5be9"`)
         await db.query(`DROP TABLE "transfer"`)
         await db.query(`DROP INDEX "public"."IDX_b27b1150b8a7af68424540613c"`)

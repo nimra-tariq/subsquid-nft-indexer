@@ -17,6 +17,10 @@ type Processor = EvmBatchProcessor<AddLogItem<LogItem<false> | TransactionItem<f
 export type Item = BatchProcessorItem<Processor>
 export type Ctx = BatchHandlerContext<Store, Item>
 
+export enum ContractStandard {
+    ERC721='ERC721',
+    ERC1155='ERC1155'
+} 
 
 export type TransferData = {
     id: string;
@@ -26,5 +30,6 @@ export type TransferData = {
     timestamp: Date;
     block: number;
     transactionHash: string;
-    contract:string
+    contract:string;
+    collectionType:ContractStandard
   };
