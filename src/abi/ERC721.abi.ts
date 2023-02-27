@@ -12,12 +12,8 @@ export const ABI_JSON = [
                 "name": "symbol"
             },
             {
-                "type": "uint256",
-                "name": "maxNftSupply"
-            },
-            {
-                "type": "uint256",
-                "name": "saleStart"
+                "type": "string",
+                "name": "baseURI"
             }
         ]
     },
@@ -68,23 +64,6 @@ export const ABI_JSON = [
     {
         "type": "event",
         "anonymous": false,
-        "name": "OwnershipTransferred",
-        "inputs": [
-            {
-                "type": "address",
-                "name": "previousOwner",
-                "indexed": true
-            },
-            {
-                "type": "address",
-                "name": "newOwner",
-                "indexed": true
-            }
-        ]
-    },
-    {
-        "type": "event",
-        "anonymous": false,
         "name": "Transfer",
         "inputs": [
             {
@@ -101,58 +80,6 @@ export const ABI_JSON = [
                 "type": "uint256",
                 "name": "tokenId",
                 "indexed": true
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "BAYC_PROVENANCE",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-            {
-                "type": "string"
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "MAX_APES",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-            {
-                "type": "uint256"
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "REVEAL_TIMESTAMP",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-            {
-                "type": "uint256"
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "apePrice",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-            {
-                "type": "uint256"
             }
         ]
     },
@@ -206,22 +133,6 @@ export const ABI_JSON = [
     },
     {
         "type": "function",
-        "name": "emergencySetStartingIndexBlock",
-        "constant": false,
-        "payable": false,
-        "inputs": [],
-        "outputs": []
-    },
-    {
-        "type": "function",
-        "name": "flipSaleState",
-        "constant": false,
-        "payable": false,
-        "inputs": [],
-        "outputs": []
-    },
-    {
-        "type": "function",
         "name": "getApproved",
         "constant": true,
         "stateMutability": "view",
@@ -262,33 +173,6 @@ export const ABI_JSON = [
     },
     {
         "type": "function",
-        "name": "maxApePurchase",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-            {
-                "type": "uint256"
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "mintApe",
-        "constant": false,
-        "stateMutability": "payable",
-        "payable": true,
-        "inputs": [
-            {
-                "type": "uint256",
-                "name": "numberOfTokens"
-            }
-        ],
-        "outputs": []
-    },
-    {
-        "type": "function",
         "name": "name",
         "constant": true,
         "stateMutability": "view",
@@ -297,19 +181,6 @@ export const ABI_JSON = [
         "outputs": [
             {
                 "type": "string"
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "owner",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-            {
-                "type": "address"
             }
         ]
     },
@@ -330,22 +201,6 @@ export const ABI_JSON = [
                 "type": "address"
             }
         ]
-    },
-    {
-        "type": "function",
-        "name": "renounceOwnership",
-        "constant": false,
-        "payable": false,
-        "inputs": [],
-        "outputs": []
-    },
-    {
-        "type": "function",
-        "name": "reserveApes",
-        "constant": false,
-        "payable": false,
-        "inputs": [],
-        "outputs": []
     },
     {
         "type": "function",
@@ -395,19 +250,6 @@ export const ABI_JSON = [
     },
     {
         "type": "function",
-        "name": "saleIsActive",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-            {
-                "type": "bool"
-            }
-        ]
-    },
-    {
-        "type": "function",
         "name": "setApprovalForAll",
         "constant": false,
         "payable": false,
@@ -422,79 +264,6 @@ export const ABI_JSON = [
             }
         ],
         "outputs": []
-    },
-    {
-        "type": "function",
-        "name": "setBaseURI",
-        "constant": false,
-        "payable": false,
-        "inputs": [
-            {
-                "type": "string",
-                "name": "baseURI"
-            }
-        ],
-        "outputs": []
-    },
-    {
-        "type": "function",
-        "name": "setProvenanceHash",
-        "constant": false,
-        "payable": false,
-        "inputs": [
-            {
-                "type": "string",
-                "name": "provenanceHash"
-            }
-        ],
-        "outputs": []
-    },
-    {
-        "type": "function",
-        "name": "setRevealTimestamp",
-        "constant": false,
-        "payable": false,
-        "inputs": [
-            {
-                "type": "uint256",
-                "name": "revealTimeStamp"
-            }
-        ],
-        "outputs": []
-    },
-    {
-        "type": "function",
-        "name": "setStartingIndex",
-        "constant": false,
-        "payable": false,
-        "inputs": [],
-        "outputs": []
-    },
-    {
-        "type": "function",
-        "name": "startingIndex",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-            {
-                "type": "uint256"
-            }
-        ]
-    },
-    {
-        "type": "function",
-        "name": "startingIndexBlock",
-        "constant": true,
-        "stateMutability": "view",
-        "payable": false,
-        "inputs": [],
-        "outputs": [
-            {
-                "type": "uint256"
-            }
-        ]
     },
     {
         "type": "function",
@@ -617,27 +386,6 @@ export const ABI_JSON = [
                 "name": "tokenId"
             }
         ],
-        "outputs": []
-    },
-    {
-        "type": "function",
-        "name": "transferOwnership",
-        "constant": false,
-        "payable": false,
-        "inputs": [
-            {
-                "type": "address",
-                "name": "newOwner"
-            }
-        ],
-        "outputs": []
-    },
-    {
-        "type": "function",
-        "name": "withdraw",
-        "constant": false,
-        "payable": false,
-        "inputs": [],
         "outputs": []
     }
 ]
