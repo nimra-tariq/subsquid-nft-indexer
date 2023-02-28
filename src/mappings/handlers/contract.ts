@@ -17,7 +17,7 @@ export async function getOrCreateContractEntity(store: Store,transferData:Transf
         totalSupply: 10000n,
         collectionType:transferData.collectionType
       });
-      await store.insert(contractEntity);
+      await store.save(contractEntity);
     }
   }
   return contractEntity;

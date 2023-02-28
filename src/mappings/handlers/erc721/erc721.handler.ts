@@ -11,6 +11,7 @@ export function handleErc721Transfer(
   ): TransferData {
     const { evmLog, transaction, block } = ctx;
     const addr = evmLog.address.toLowerCase()
+ 
     const { from, to, tokenId } = erc721.events.Transfer.decode(evmLog);
       
     const transfer: TransferData = {
