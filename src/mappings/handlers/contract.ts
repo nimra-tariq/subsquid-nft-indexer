@@ -20,32 +20,6 @@ export async function getOrCreateContractEntity(ctx:BlockHandlerContext<Store>,t
     const res = await multicall.tryAggregate(functions.map((func)=>[func,transferData.contract,[]] as [func: Func<any, {}, any>,
       address: string,
       calls: any[],]),100)
-
-
-    // const obj = ['name','symbol','totalSupply']
-
-    //   const properties = .map((o, i) => {
-    //     if (res[i].success) {
-    //       o = <string>res.value;
-    //     } else if (res.returnData) {
-    //       // t.uri = <string>erc721.functions.tokenURI.tryDecodeResult(res.returnData) || <string>erc1155.functions.uri.tryDecodeResult(res.returnData)||'null i am saved';
-    //       // t.uri = <string>bayc.functions.tokenURI.tryDecodeResult(res.returnData) || 'store null if failed'
-    //       t.uri = <string>erc721.functions.tokenURI.tryDecodeResult(res.returnData) || 'store null if failed'
-    //       // t.uri = 'null i am saved';
-    //     }
-    //   }
-    // });
-
-    // const pro = results.map((res, i) => {
-    //     if (res.success) {
-    //       return {[obj[i]] : <string>res.value};
-    //     } else if (res.returnData) {
-    //      return {[obj[i]]: <string>functions[i].tryDecodeResult(res.returnData) || ''}
-    //     }
-    //     else
-    //     return {[obj[i]] : '' || 0n}
-    // });
-    // ctx.log.info(`Done`);
     
       contractEntity = new Contract({
         id: transferData.contract,

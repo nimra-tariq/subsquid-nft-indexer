@@ -1,9 +1,6 @@
 import { BlockHandlerContext } from "@subsquid/evm-processor";
 import { Store } from "@subsquid/typeorm-store";
-import { maxBy } from "lodash";
 import { In } from "typeorm";
-import * as erc721 from '../../../abi/ERC721';
-import { Multicall } from "../../../abi/multicall";
 import { Owner, Token, Transfer } from "../../../model";
 import { TransferData } from "../../../types";
 import { getOrCreateContractEntity } from "../contract";
@@ -14,39 +11,6 @@ export async function saveTransfers(
     ctx: BlockHandlerContext<Store>,
     transfersData: TransferData[]
   ) {
-
-    // const functions = [erc721.functions.name,erc721.functions.symbol,erc721.functions.totalSupply]
-    //mulicall for fetching collection name symbol and total supply
-    // const multicall = new Multicall(ctx, MULTICALL_ADDRESS)
-    // const results = await multicall.tryAggregate(functions.map((func)=>[func,ENS_NFT_CONTRACT,[]] as [func: Func<any, {}, any>, address: string, args: any[]]))
-    // const results = await multicall.tryAggregate(functions.map((func)=>[func,ENS_NFT_CONTRACT,[]] as [func: Func<any, {}, any>,
-    //   address: string,
-  //   calls: any[],]))
-
-  // const results = await multicall.tryAggregate(functions.map((func)=>[func,ENS_NFT_CONTRACT,[]] as [func: Func<any, {}, any>,
-  //   address: string,
-  //   calls: any[],]))
-  // getOrCreateContractEntity(ctx,transfersData[0])
-  // getOrCreateContractEntity(ctx,transfersData)
-    // const results = await multicall.tryAggregate(erc721.functions.tokenURI,[{id:4,con:BAYC},{id:5,con:ENS_NFT_CONTRACT},{id:6,con:ENS_NFT_CONTRACT},{id:23,con:ENS_NFT_CONTRACT},{id:23,con:ENS_NFT_CONTRACT}].map(tk => [tk.con, [tk.id]] as [address: string, args: any[]]))
-
-    // const results = await multicall.tryAggregate(
-    //   bayc.functions.tokenURI,
-    //   transfersData.map(t => [
-    //     BAYC,
-    //     [BigNumber.from(t.tokenId)]
-    //   ] as [string, any[]]),
-    //   100
-    // );
-
-  //   const results = await multicall.tryAggregate(bayc.functions.tokenURI, transfersData.map(t => [BAYC, [BigNumber.from(t.tokenId)]] as [string, any[]]),100);
-
-  //   const results = await multicall.tryAggregate(ERC20.functions.symbol, tokenAddresses.map(a => [a, []]))
-  // const results = await multicall.tryAggregate(ens.functions.name,[ENS_NFT_CONTRACT,[]] as [address: string, args: any[]])
-
-
-  //   const results = await multicall.tryAggregate(erc721.functions.tokenURI, transfersData.map(t => [t.contract, [BigNumber.from(t.tokenId)]] as [address: string, args: any[]]),100 )
-  //   console.log(results,'res')
 
     const tokensIds: Set<string> = new Set();
     const ownersIds: Set<string> = new Set();
@@ -120,52 +84,6 @@ export async function saveTransfers(
       transfers.add(transfer);
     }
   
-    // //TODO : need to handle multicall 
-    // const maxHeight = maxBy(transfersData, t => t.block)!.block; 
-    // // // query the multicall contract at the max height of the chunk
-    // const multicall = new Multicall(ctx, {height: maxHeight}, MULTICALL_ADDRESS)
-  
-    // ctx.log.info(`Calling mutlicall for ${transfersData.length} tokens...`)
-    // // call in pages of size 100
-    // const results = await multicall.tryAggregate(
-    //   bayc.functions.tokenURI,
-    //   transfersData.map(t => [
-    //     BAYC,
-    //     [BigNumber.from(t.tokenId)]
-    //   ] as [string, any[]]),
-    //   100
-    // );
-
-    // const results = await multicall.tryAggregate(
-    //   transfersData.map(t => [
-    //     // t.collectionType===ContractStandard.ERC721?erc721.functions.tokenURI:erc1155.functions.uri,
-    //     erc721.functions.tokenURI,
-    //     t.contract,
-    //     [BigNumber.from(t.tokenId)]
-    //   ] as [Func<any, {}, any>,string, any[]]),
-    //   100
-    // );
-  
-    // console.log(transfersData[0].contract,'contract addrss is here');
-    // const results = await multicall.tryAggregate(erc721.functions.tokenURI, transfersData.map(t => [t.contract, [BigNumber.from(t.tokenId)]] as [address: string, args: any[]]) )
-
-      // console.log(results,'results mapped')
-
-    // results.forEach((res, i) => {
-    //   let t = tokens.get(transfersData[i].tokenId.toString());
-    //   if (t) {
-    //     // let uri = '';
-    //     if (res.success) {
-    //       t.uri = <string>res.value;
-    //     } else if (res.returnData) {
-    //       // t.uri = <string>erc721.functions.tokenURI.tryDecodeResult(res.returnData) || <string>erc1155.functions.uri.tryDecodeResult(res.returnData)||'null i am saved';
-    //       // t.uri = <string>bayc.functions.tokenURI.tryDecodeResult(res.returnData) || 'store null if failed'
-    //       t.uri = <string>erc721.functions.tokenURI.tryDecodeResult(res.returnData) || 'store null if failed'
-    //       // t.uri = 'null i am saved';
-    //     }
-    //   }
-    // });
-    // ctx.log.info(`Done`);
     
     await ctx.store.save([...owners.values()]);
     await ctx.store.save([...tokens.values()]);
