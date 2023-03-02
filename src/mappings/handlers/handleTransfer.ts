@@ -13,7 +13,6 @@ export const handleBatch = async (ctx:Ctx) => {
 
             if (item.kind !== 'evmLog') continue
               if ( item.evmLog.topics.length === 4 ) {
-                // console.log(item)
                 const ctxLog = {
                   ...ctx,
                   block:block.header,
@@ -35,6 +34,7 @@ export const handleBatch = async (ctx:Ctx) => {
                   // await modules.handleErc1155UriChanged();
                   break;
                 default:
+                  break;
               }
                 transfersData.push(transferData)
             }

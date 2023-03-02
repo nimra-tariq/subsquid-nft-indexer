@@ -1,23 +1,60 @@
 // src/contract.ts
+import { BlockHandlerContext } from "@subsquid/evm-processor";
 import { Store } from "@subsquid/typeorm-store";
-import { ContractStandard } from "../../model";
-import { Contract } from "../../model/generated/contract.model"
+import { Func } from "../../abi/abi.support";
+import * as erc721 from '../../abi/ERC721';
+import { Multicall } from "../../abi/multicall";
+import { Contract } from "../../model/generated/contract.model";
 import { TransferData } from "../../types";
-
+import { MULTICALL_ADDRESS } from "./saveTransfers";
 let contractEntity: Contract | undefined;
 
-export async function getOrCreateContractEntity(store: Store,transferData:TransferData): Promise<Contract> {
+export async function getOrCreateContractEntity(ctx:BlockHandlerContext<Store>,transferData:TransferData): Promise<Contract> {
+
   if (contractEntity == null) {
-    contractEntity = await store.get(Contract, transferData.contract);
+    contractEntity = await ctx.store.get(Contract, transferData.contract);
     if (contractEntity == null) {
+    const functions = [erc721.functions.name,erc721.functions.symbol,erc721.functions.totalSupply]
+    //mulicall for fetching collection name symbol and total supply
+    const multicall = new Multicall(ctx, MULTICALL_ADDRESS)
+    const res = await multicall.tryAggregate(functions.map((func)=>[func,transferData.contract,[]] as [func: Func<any, {}, any>,
+      address: string,
+      calls: any[],]),100)
+
+
+    // const obj = ['name','symbol','totalSupply']
+
+    //   const properties = .map((o, i) => {
+    //     if (res[i].success) {
+    //       o = <string>res.value;
+    //     } else if (res.returnData) {
+    //       // t.uri = <string>erc721.functions.tokenURI.tryDecodeResult(res.returnData) || <string>erc1155.functions.uri.tryDecodeResult(res.returnData)||'null i am saved';
+    //       // t.uri = <string>bayc.functions.tokenURI.tryDecodeResult(res.returnData) || 'store null if failed'
+    //       t.uri = <string>erc721.functions.tokenURI.tryDecodeResult(res.returnData) || 'store null if failed'
+    //       // t.uri = 'null i am saved';
+    //     }
+    //   }
+    // });
+
+    // const pro = results.map((res, i) => {
+    //     if (res.success) {
+    //       return {[obj[i]] : <string>res.value};
+    //     } else if (res.returnData) {
+    //      return {[obj[i]]: <string>functions[i].tryDecodeResult(res.returnData) || ''}
+    //     }
+    //     else
+    //     return {[obj[i]] : '' || 0n}
+    // });
+    // ctx.log.info(`Done`);
+    
       contractEntity = new Contract({
         id: transferData.contract,
-        name: "Exosama",
-        symbol: "EXO",
-        totalSupply: 10000n,
+        name: res[0].success ?  res[0].value : '',
+        symbol: res[1].success ?  res[1].value :  '',
+        totalSupply: res[2].success ?  res[2].value :  10000n,
         collectionType:transferData.collectionType
       });
-      await store.save(contractEntity);
+      await ctx.store.save(contractEntity);
     }
   }
   return contractEntity;
